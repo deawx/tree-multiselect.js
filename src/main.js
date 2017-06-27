@@ -1,25 +1,28 @@
-var Tree = require('./tree');
+let Tree = require('./tree');
 
-var uniqueId = 0;
+let uniqueId = 0;
 
-var treeMultiselect = function(opts) {
-  var options = mergeDefaultOptions(opts);
+let treeMultiselect = function(opts) {
+  let options = mergeDefaultOptions(opts);
 
-  this.each(() => {
-    var $originalSelect = this;
+  return this.map(() => {
+    let $originalSelect = this;
     $originalSelect.attr('multiple', '').css('display', 'none');
 
-    var tree = new Tree(uniqueId, $originalSelect, options);
+    let tree = new Tree(uniqueId, $originalSelect, options);
     tree.initialize();
 
     ++uniqueId;
-  });
 
-  return this;
+    return {
+      reload: tree.reload.bind(tree),
+      remove: tree.remove.bind(tree)
+    };
+  });
 };
 
 function mergeDefaultOptions(options) {
-  var defaults = {
+  let defaults = {
     allowBatchSelection: true,
     collapsible: true,
     enableSelectAll: false,
