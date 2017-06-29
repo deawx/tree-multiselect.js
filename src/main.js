@@ -15,8 +15,13 @@ let treeMultiselect = function(opts) {
     ++uniqueId;
 
     return {
-      reload: tree.reload.bind(tree),
-      remove: tree.remove.bind(tree)
+      reload: function() {
+        tree.reload();
+      },
+
+      remove: function() {
+        tree.remove();
+      }
     };
   });
 };

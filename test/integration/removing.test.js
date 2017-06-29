@@ -11,4 +11,31 @@ describe('Removing', () => {
     tree.remove();
     assert.equal($(".tree-multiselect").length, 0);
   });
+
+  it('removes the right tree', () => {
+    $('select').attr('id', 'foo');
+    $("select#foo").append("<option value='one' data-section='foo' selected='selected' data-description='One'>One</option>");
+
+    var $newSelect = $("<select />", {id: 'bar'});
+    $newSelect.append("<option value='two' data-section='bar' selected='selected' data-description='Two'>Two</option>");
+    $("#fixture").append($newSelect);
+
+    var trees = $("select").treeMultiselect();
+    assert.equal(trees.length, 2);
+
+    assert.equal($(".tree-multiselect").length, 2);
+    assert.equal(Common.selection({value: 'one'}).length, 1);
+    assert.equal(Common.selection({value: 'two'}).length, 1);
+
+    trees[0].remove();
+
+    assert.equal($(".tree-multiselect").length, 1);
+    assert.equal(Common.selection({value: 'one'}).length, 0);
+    assert.equal(Common.selection({value: 'two'}).length, 1);
+
+    trees[1].remove();
+    assert.equal($(".tree-multiselect").length, 0);
+    assert.equal(Common.selection({value: 'one'}).length, 0);
+    assert.equal(Common.selection({value: 'two'}).length, 0);
+  });
 });

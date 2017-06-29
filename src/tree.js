@@ -215,7 +215,7 @@ Tree.prototype.redrawSectionCheckboxes = function($section) {
         returnVal &= ~0b01;
       }
 
-      if (returnVal == 0) {
+      if (returnVal === 0) {
         break;
       }
     }
@@ -254,7 +254,7 @@ Tree.prototype.addCollapsibility = function() {
   }
 
   this.$selectionContainer.on('click', titleSelector, function(event) {
-    if (event.target.nodeName == 'INPUT') {
+    if (event.target.nodeName === 'INPUT') {
       return;
     }
 
@@ -412,11 +412,7 @@ Tree.prototype.render = function(noCallbacks) {
 
   this.$originalSelect.html(options);
   this.$originalSelect.find('option').each(function(idx, el) {
-    if (originalValsHash[Util.getKey(el)]) {
-      this.selected = true;
-    } else {
-      this.selected = false;
-    }
+    this.selected = !!originalValsHash[Util.getKey(el)];
   });
   // NOTE: the following does not work since jQuery duplicates option values with the same value
   //this.$originalSelect.val(vals).change();
